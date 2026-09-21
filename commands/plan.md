@@ -18,7 +18,7 @@ Load `workflow-config`, `planning-standards`, `testing-standards`, `human-in-the
 3. **Analyse** — run `/analyze-ticket <KEY>` unless an analysis for this ticket already exists
    in this conversation.
 
-4. **Create the file** — `<plans.dir>/<KEY>-<slug>.md` from `plans.template`. If the template is
+4. **Create the file** — `<plans.dir>/<plans.filePattern>` (default `<TICKET>-<slug>.md`) from `plans.template`. If the template is
    missing, use `templates/plan-template.md` from this plugin and say so. Fill every section
    per `planning-standards`; delete rows that do not apply rather than writing "N/A". Quote the
    ticket; cite file:line; include design links if any; leave `**Approved:**` empty.

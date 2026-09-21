@@ -40,7 +40,8 @@ Load `workflow-config`, `jira-tracker`, `github-pr`, `git-standards`,
    what was added versus already present versus failed.
 
 10. **Docs sync (optional)** — if `docsSync.type` is `confluence` and the diff touches any of
-    `docsSync.paths`, push those files to their mapped pages using `docsSync.map`
+    `docsSync.paths`, push those files to their mapped pages using `docsSync.map` — following
+    the title and parent conventions recorded in that map file —
     (create the page under the mapped parent and add the map entry when the key is new; include
     the updated map in the branch). List created versus updated pages. Skip silently when not
     configured.

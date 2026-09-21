@@ -1,13 +1,11 @@
 {
   "$comment": "Built-in defaults every shared command starts from. A project overrides them in .claude/workflow.json (committed) and an engineer in .claude/workflow.local.json (git-ignored). Keys set to null mean 'not configured' — commands skip that behaviour and say so rather than guessing.",
-
   "project": {
     "name": null,
     "stackSummary": null,
     "codingStandards": ".claude/coding-standards.md",
     "additionalContext": []
   },
-
   "tracker": {
     "type": "none",
     "cloudId": null,
@@ -22,7 +20,13 @@
       "ready": "Selected for Development",
       "inProgress": "In Progress",
       "codeReview": "Code Review",
-      "atOrBeyondCodeReview": ["Code Review", "QA", "Verified on Staging", "Done", "Closed"]
+      "atOrBeyondCodeReview": [
+        "Code Review",
+        "QA",
+        "Verified on Staging",
+        "Done",
+        "Closed"
+      ]
     },
     "transitions": {
       "inProgress": null,
@@ -32,16 +36,20 @@
       "onlyActiveRelease": false,
       "extraJql": null
     },
-    "storyPointScale": [1, 2, 3, 5, 8]
+    "storyPointScale": [
+      1,
+      2,
+      3,
+      5,
+      8
+    ]
   },
-
   "git": {
     "baseBranch": "main",
     "branchPattern": "<name>/<TICKET>-<slug>",
     "prTitlePattern": "<TICKET>: <summary>",
     "commitTitlePattern": "<TICKET>: <summary>"
   },
-
   "github": {
     "repo": null,
     "assignSelf": true,
@@ -53,7 +61,6 @@
     "reviewerPolicy": "pool-except-author",
     "confirmBeforeCreate": true
   },
-
   "commands": {
     "lint": null,
     "format": null,
@@ -62,24 +69,25 @@
     "testSingleFile": null,
     "build": null
   },
-
   "testing": {
     "policy": "tests-on-request",
     "regressionTestForBugFixes": true,
     "notes": null
   },
-
   "plans": {
     "dir": ".claude/plans",
     "template": ".claude/plans/_template.md",
+    "filePattern": "<TICKET>-<slug>.md",
     "requiredFor": "non-trivial"
   },
-
   "review": {
-    "severityScale": ["🔴 must fix before merge", "🟡 should fix (tech debt if skipped)", "🟢 nice to have"],
+    "severityScale": [
+      "🔴 must fix before merge",
+      "🟡 should fix (tech debt if skipped)",
+      "🟢 nice to have"
+    ],
     "useIndependentReviewer": false
   },
-
   "aiContribution": {
     "enabled": true,
     "weights": {
@@ -95,18 +103,23 @@
     },
     "writeToTracker": false
   },
-
   "failureLog": {
     "path": ".claude/ai-failures.md",
-    "areas": ["Patterns", "Architecture", "Data / State", "Integration", "Styling / UI", "Testing", "Tooling"]
+    "areas": [
+      "Patterns",
+      "Architecture",
+      "Data / State",
+      "Integration",
+      "Styling / UI",
+      "Testing",
+      "Tooling"
+    ]
   },
-
   "docsSync": {
     "type": "none",
     "map": null,
     "paths": []
   },
-
   "figma": {
     "enabled": false
   }

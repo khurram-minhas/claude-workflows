@@ -32,7 +32,7 @@ Schema: [`config/workflow.schema.json`](../config/workflow.schema.json). Default
 | `github` | repo, self-assign, labels, reviewer pool and policy, confirm-before-create | create-pr, pr-comments |
 | `commands` | lint, format, typecheck, test, single-file test, build | implement, self-review, perf-check, pr-comments |
 | `testing` | policy, regression rule, dangerous-facts notes | plan, implement, self-review |
-| `plans` | directory, template path, when required | plan, plan-review, implement |
+| `plans` | directory, template path, file-name pattern, when required | plan, plan-review, implement |
 | `review` | severity labels, independent reviewer by default | self-review, plan-review |
 | `aiContribution` | enabled, weights, write-back to tracker | create-pr, ai-contribution |
 | `failureLog` | path, area headings | analyze, implement, self-review, log-failure |

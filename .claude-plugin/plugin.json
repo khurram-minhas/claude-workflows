@@ -7,5 +7,14 @@
     "name": "Arbisoft Engineering"
   },
   "license": "Proprietary — internal to Arbisoft",
-  "keywords": ["workflow", "jira", "github", "planning", "code-review", "ai-contribution"]
+  "keywords": [
+    "workflow",
+    "jira",
+    "github",
+    "planning",
+    "code-review",
+    "ai-contribution"
+  ],
+  "homepage": "https://github.com/khurram-minhas/claude-workflows",
+  "repository": "https://github.com/khurram-minhas/claude-workflows"
 }

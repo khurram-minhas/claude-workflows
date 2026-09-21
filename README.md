@@ -14,15 +14,18 @@ Every step that changes a ticket, opens a PR or resolves a thread stops for a hu
 
 ## Install
 
-As a plugin (recommended — one copy, updates flow to everyone):
+The repository is itself a Claude Code plugin marketplace. From a terminal (the `/plugin`
+slash commands only exist in the terminal CLI, not in the IDE extensions — the `claude plugin`
+CLI form below works everywhere):
 
-```
-/plugin marketplace add arbisoft/arbisoft-claude-workflows      # or the internal git URL
-/plugin install arbisoft-workflows@arbisoft-claude-workflows
+```bash
+claude plugin marketplace add khurram-minhas/claude-workflows
+claude plugin install arbisoft-workflows@arbisoft-claude-workflows
 ```
 
-For local testing: `/plugin marketplace add ./arbisoft-claude-workflows` then install as above
-(loaded in place, edits picked up immediately).
+To make a repository enable it automatically for every teammate, commit
+[`docs/Installing.md`](docs/Installing.md)'s `settings.json` snippet. For local development of
+the plugin itself: `claude plugin marketplace add ./claude-workflows` loads it in place.
 
 Or copy `commands/`, `skills/`, `agents/` into a repository's `.claude/` — works, but you own
 the updates.
@@ -62,6 +65,7 @@ docs/         adoption guide, Xiangqi journey, catalogs, MCP + configuration gui
 - Why it looks like this: [docs/Xiangqi-AI-Journey.md](docs/Xiangqi-AI-Journey.md).
 - What each piece does: [docs/Command-Catalog.md](docs/Command-Catalog.md),
   [docs/Skills-Catalog.md](docs/Skills-Catalog.md).
+- Installing for a team or a repo: [docs/Installing.md](docs/Installing.md).
 - What was inventoried and what stayed project-specific:
   [docs/Xiangqi-Setup-Inventory.md](docs/Xiangqi-Setup-Inventory.md).
 

@@ -1,0 +1,70 @@
+{
+  "$schema": "../../../config/workflow.schema.json",
+  "$comment": "Multi-engineer React repository with Jira, story points, transitions from commands, reviewer pool, and Confluence doc sync. Values are illustrative — every id must be verified with /setup-workflow.",
+  "project": {
+    "name": "Web Client",
+    "stackSummary": "React 18, Redux + Redux-Saga, styled-components, react-intl (3 locales), Socket.IO client, Webpack, Jest, ESLint (Airbnb), SonarQube gate in CI",
+    "codingStandards": ".claude/coding-standards.md"
+  },
+  "tracker": {
+    "type": "jira",
+    "cloudId": "yourorg.atlassian.net",
+    "projectKey": "ABC",
+    "browseUrl": "https://yourorg.atlassian.net/browse/",
+    "fields": {
+      "plannedStoryPoints": "customfield_10010",
+      "actualStoryPoints": "customfield_10833",
+      "aiContribution": "customfield_11729"
+    },
+    "transitions": { "inProgress": "31", "codeReview": "51" },
+    "pickFilter": { "onlyActiveRelease": true },
+    "storyPointScale": [1, 2, 3, 5]
+  },
+  "git": {
+    "baseBranch": "develop",
+    "branchPattern": "<name>/<TICKET>-<slug>",
+    "prTitlePattern": "<TICKET>: <summary>",
+    "commitTitlePattern": "<TICKET>: <summary>"
+  },
+  "github": {
+    "assignSelf": true,
+    "labels": { "readyForReview": "Ready to Review", "bug": "bug" },
+    "reviewerPool": ["reviewer-one", "reviewer-two", "reviewer-three"],
+    "reviewerPolicy": "pool-except-author",
+    "confirmBeforeCreate": true
+  },
+  "commands": {
+    "lint": "yarn lint",
+    "test": "yarn test",
+    "testSingleFile": "yarn jest <file>",
+    "build": "yarn build"
+  },
+  "testing": {
+    "policy": "tests-on-request",
+    "regressionTestForBugFixes": true
+  },
+  "plans": { "dir": ".claude/plans", "template": ".claude/plans/_template.md", "requiredFor": "non-trivial" },
+  "aiContribution": {
+    "weights": {
+      "Requirement Analysis": 10,
+      "Technical Planning": 15,
+      "Architecture Decisions": 15,
+      "Code Generation": 25,
+      "Refactoring": 10,
+      "Documentation": 5,
+      "Debugging": 10,
+      "Code Review Assistance": 10
+    },
+    "writeToTracker": false
+  },
+  "failureLog": {
+    "path": ".claude/ai-failures.md",
+    "areas": ["Patterns", "Architecture", "Redux / Saga", "Styled Components", "i18n", "Socket.IO", "ESLint / Sonar", "Themed Images"]
+  },
+  "docsSync": {
+    "type": "confluence",
+    "map": ".claude/confluence-map.json",
+    "paths": [".claude/plans/*.md", ".claude/agents/*.md", ".claude/commands/*.md"]
+  },
+  "figma": { "enabled": true }
+}

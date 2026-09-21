@@ -1,0 +1,67 @@
+# <Project name> — Claude Code Context
+
+## ⚠️ Environment awareness — read this first
+
+You are running on the developer's local machine, not production. Local config files reflect
+the local environment; never infer production values from them. Deployment happens through
+CI, not from here.
+
+## Project
+
+<One paragraph: what the product is, who uses it, the scale that matters for engineering
+decisions.>
+
+## Tech stack
+
+- <framework / language / versions>
+- <data stores, queues, real-time>
+- <lint, test, quality gate, CI>
+
+## Coding guidelines
+
+Follow `.claude/coding-standards.md` for all patterns, structure, and quality-gate rules. It is
+the canonical source; this file only maps the territory.
+
+## Architecture map
+
+<Key directories and what lives in them. The container/module pattern. Where state, side
+effects, API clients and config live. Keep it to what a newcomer needs to find things.>
+
+## Code rules
+
+- Read the file you are modifying first — match existing patterns exactly.
+- Prefer existing utilities, hooks, helpers and patterns; no new abstractions unless asked.
+- Never hardcode user-facing text / config values / secrets.
+- Run `<lint command>` before calling work done — zero errors, zero new warnings.
+- <Testing policy in one line — e.g. "Write tests when asked; bug fixes always ship a regression test.">
+
+## NEVER do
+
+- <The short list of things that have actually caused incidents or review churn here.>
+
+## Workflow
+
+This repository uses the shared **arbisoft-workflows** commands, configured in
+`.claude/workflow.json` (project) and `.claude/workflow.local.json` (personal, git-ignored).
+
+| Step | Command | Writes to tracker? |
+| --- | --- | --- |
+| Pick | `/pick-ticket` | no |
+| Open | `/start-ticket <KEY>` | Planned SP (asked), → In Progress, cuts the branch |
+| Analyse / plan | `/analyze-ticket`, `/plan`, `/plan-review` | no |
+| Build | `/implement` | no |
+| Review | `/self-review`, `/perf-check` | no |
+| Ship | `/create-pr` | → Code Review |
+| After review | `/pr-comments` | no |
+| Record | `/ai-contribution`, `/log-failure` | no |
+
+Rules: never move a ticket backwards; never invent story points; failed tracker calls are
+reported, never folded into success. Plans live in `<plans.dir>`; AI corrections go in
+`<failureLog.path>`.
+
+## Before writing code
+
+1. Read the file you are modifying.
+2. Check whether a similar component / helper / pattern already exists.
+3. Verify every import, key, endpoint, and prop you reference actually exists.
+4. Consider the runtime cost at production scale, not on your laptop.

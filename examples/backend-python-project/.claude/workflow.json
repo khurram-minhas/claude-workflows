@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../config/workflow.schema.json",
+  "$comment": "Python service sharing the same Jira project as the frontend, with tests written for every feature and a dangerous test suite. Illustrative ids.",
+  "extends": "../../team-config/workflow.team.json",
+  "project": {
+    "name": "API Service",
+    "stackSummary": "Python 3.12, Flask 3, Flask-SocketIO (gevent), SQLAlchemy 2 + PostgreSQL, Redis, Celery + RabbitMQ, pytest, ruff",
+    "codingStandards": ".claude/coding-standards.md",
+    "additionalContext": ["docs/adr/"]
+  },
+  "git": {
+    "prTitlePattern": "<TICKET> - <summary>",
+    "commitTitlePattern": "<TICKET> - <summary>"
+  },
+  "commands": {
+    "lint": "ruff check .",
+    "test": null,
+    "testSingleFile": "docker compose exec -T -e ENVIRONMENT=testing web pytest <file> -q"
+  },
+  "testing": {
+    "policy": "tests-with-features",
+    "regressionTestForBugFixes": true,
+    "notes": "ALWAYS pass ENVIRONMENT=testing or the fixture drop_all()s the dev database. Run one file per command, never the full suite, never several paths. Ask before the first run of a session."
+  },
+  "plans": { "dir": "docs/plans", "template": "docs/plans/_template.md", "requiredFor": "non-trivial" },
+  "docsSync": {
+    "type": "confluence",
+    "map": ".claude/confluence-map.json",
+    "paths": [".claude/commands/*.md", ".claude/skills/*/SKILL.md", "docs/plans/*.md"]
+  }
+}

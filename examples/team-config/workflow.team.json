@@ -1,0 +1,25 @@
+{
+  "$schema": "../../config/workflow.schema.json",
+  "$comment": "Team-wide layer shared by every repository of one product team. Repositories point at it with \"extends\". Keep only what is truly common: the tracker, the reviewer pool, the AI weights, the failure-log areas.",
+  "tracker": {
+    "type": "jira",
+    "cloudId": "yourorg.atlassian.net",
+    "projectKey": "ABC",
+    "browseUrl": "https://yourorg.atlassian.net/browse/",
+    "fields": {
+      "plannedStoryPoints": "customfield_10010",
+      "actualStoryPoints": "customfield_10833",
+      "aiContribution": "customfield_11729"
+    },
+    "transitions": { "inProgress": "31", "codeReview": "51" },
+    "storyPointScale": [1, 2, 3, 5]
+  },
+  "git": { "baseBranch": "develop", "branchPattern": "<name>/<TICKET>-<slug>" },
+  "github": {
+    "assignSelf": true,
+    "labels": { "readyForReview": "Ready to Review", "bug": "bug" },
+    "reviewerPool": ["reviewer-one", "reviewer-two", "reviewer-three"],
+    "reviewerPolicy": "pool-except-author"
+  },
+  "aiContribution": { "enabled": true, "writeToTracker": false }
+}

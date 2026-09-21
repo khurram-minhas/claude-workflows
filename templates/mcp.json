@@ -1,0 +1,13 @@
+{
+  "$comment": "Example project-level .mcp.json. Jira/Confluence and Figma are remote MCP servers registered with `claude mcp add --transport http <name> <url>` (or via claude.ai connectors); GitHub needs no MCP — the commands use the gh CLI. Adjust names to what your org uses; the commands match tool suffixes, not server names.",
+  "mcpServers": {
+    "atlassian-rovo-mcp": {
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arbisoft.com/claude-workflows/workflow.schema.json",
+  "title": "Arbisoft Claude Workflows — project configuration",
+  "description": "Schema for .claude/workflow.json / .claude/workflow.local.json. Every key is optional; missing keys fall back to config/workflow.defaults.json in the plugin.",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "extends": {
+      "type": "string",
+      "description": "Path (relative to this file) of another workflow.json to inherit from — e.g. a team-wide file shared by several repos. Resolved before this file's own keys are applied."
+    },
+    "project": {
+      "type": "object",
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "stackSummary": { "type": ["string", "null"], "description": "One line, e.g. 'React 18 + Redux-Saga, react-intl, Socket.IO'. Quoted into analysis/review prompts." },
+        "codingStandards": { "type": ["string", "null"], "description": "Path to the project's coding standards file. Read by analyze/plan/implement/self-review/perf-check." },
+        "additionalContext": { "type": "array", "items": { "type": "string" }, "description": "Extra files commands should read for context (ADRs, architecture docs)." }
+      }
+    },
+    "tracker": {
+      "type": "object",
+      "properties": {
+        "type": { "enum": ["jira", "github-issues", "none"] },
+        "cloudId": { "type": ["string", "null"], "description": "Atlassian cloudId (site hostname or UUID) passed to every Jira MCP call." },
+        "projectKey": { "type": ["string", "null"], "description": "Jira project key, e.g. ABC. Ticket IDs look like ABC-123." },
+        "browseUrl": { "type": ["string", "null"], "description": "Prefix for ticket links, e.g. https://yourorg.atlassian.net/browse/" },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "plannedStoryPoints": { "type": ["string", "null"], "description": "customfield_XXXXX written by /start-ticket after a human answers. null = story points not tracked." },
+            "actualStoryPoints": { "type": ["string", "null"], "description": "Read-only for commands. Humans fill it." },
+            "aiContribution": { "type": ["string", "null"], "description": "Field that stores the AI contribution %. Only written if aiContribution.writeToTracker is true." }
+          }
+        },
+        "statuses": {
+          "type": "object",
+          "properties": {
+            "ready": { "type": "string" },
+            "inProgress": { "type": "string" },
+            "codeReview": { "type": "string" },
+            "atOrBeyondCodeReview": { "type": "array", "items": { "type": "string" }, "description": "Statuses from which a ticket must never be moved back." }
+          }
+        },
+        "transitions": {
+          "type": "object",
+          "properties": {
+            "inProgress": { "type": ["string", "null"], "description": "Transition id. Verify with getTransitionsForJiraIssue — never guess." },
+            "codeReview": { "type": ["string", "null"] }
+          }
+        },
+        "pickFilter": {
+          "type": "object",
+          "properties": {
+            "onlyActiveRelease": { "type": "boolean", "description": "Restrict /pick-ticket to the unreleased fixVersion with the earliest release date." },
+            "extraJql": { "type": ["string", "null"], "description": "Appended to the /pick-ticket JQL with AND." }
+          }
+        },
+        "storyPointScale": { "type": "array", "items": { "type": "number" } }
+      }
+    },
+    "git": {
+      "type": "object",
+      "properties": {
+        "baseBranch": { "type": "string" },
+        "branchPattern": { "type": "string", "description": "Placeholders: <name> (git user's first name, lowercase), <TICKET>, <slug>." },
+        "prTitlePattern": { "type": "string", "description": "Placeholders: <TICKET>, <summary>." },
+        "commitTitlePattern": { "type": "string" }
+      }
+    },
+    "github": {
+      "type": "object",
+      "properties": {
+        "repo": { "type": ["string", "null"], "description": "owner/repo. null = derive from the PR URL or `gh repo view`." },
+        "assignSelf": { "type": "boolean" },
+        "labels": {
+          "type": "object",
+          "properties": {
+            "readyForReview": { "type": ["string", "null"] },
+            "bug": { "type": ["string", "null"], "description": "Added when the tracker issue type is Bug." }
+          }
+        },
+        "reviewerPool": { "type": "array", "items": { "type": "string" }, "description": "GitHub logins." },
+        "reviewerPolicy": { "enum": ["pool-except-author", "none"] },
+        "confirmBeforeCreate": { "type": "boolean", "description": "Show title/body and wait for a yes before `gh pr create`." }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "description": "Shell commands. null = not available in this project; commands skip that check and say so.",
+      "properties": {
+        "lint": { "type": ["string", "null"] },
+        "format": { "type": ["string", "null"] },
+        "typecheck": { "type": ["string", "null"] },
+        "test": { "type": ["string", "null"] },
+        "testSingleFile": { "type": ["string", "null"], "description": "Template with <file>, e.g. 'pytest <file> -q'. Preferred over `test` during /implement." },
+        "build": { "type": ["string", "null"] }
+      }
+    },
+    "testing": {
+      "type": "object",
+      "properties": {
+        "policy": { "enum": ["tdd", "tests-with-features", "tests-on-request"] },
+        "regressionTestForBugFixes": { "type": "boolean", "description": "Bug-fix plans must include a failing-then-passing regression test regardless of policy." },
+        "notes": { "type": ["string", "null"], "description": "Anything dangerous about running tests here (e.g. required env vars, never run the full suite)." }
+      }
+    },
+    "plans": {
+      "type": "object",
+      "properties": {
+        "dir": { "type": "string" },
+        "template": { "type": "string" },
+        "requiredFor": { "enum": ["all", "non-trivial", "never"] }
+      }
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "severityScale": { "type": "array", "items": { "type": "string" } },
+        "useIndependentReviewer": { "type": "boolean", "description": "Have /self-review dispatch the code-reviewer agent by default." }
+      }
+    },
+    "aiContribution": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "weights": { "type": "object", "additionalProperties": { "type": "number" }, "description": "Activity → weight. Should sum to 100. Remove a row your repo never does (e.g. Unit Tests)." },
+        "writeToTracker": { "type": "boolean" }
+      }
+    },
+    "failureLog": {
+      "type": "object",
+      "properties": {
+        "path": { "type": ["string", "null"] },
+        "areas": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "docsSync": {
+      "type": "object",
+      "properties": {
+        "type": { "enum": ["none", "confluence"] },
+        "map": { "type": ["string", "null"], "description": "Path of the file → pageId map." },
+        "paths": { "type": "array", "items": { "type": "string" }, "description": "Globs whose changes trigger a sync on /create-pr." }
+      }
+    },
+    "figma": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    }
+  }
+}

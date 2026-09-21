@@ -1,0 +1,15 @@
+{
+  "name": "arbisoft-claude-workflows",
+  "description": "Arbisoft internal marketplace for shared Claude Code workflows",
+  "owner": {
+    "name": "Arbisoft Engineering"
+  },
+  "plugins": [
+    {
+      "name": "arbisoft-workflows",
+      "description": "Ticket-to-PR engineering workflow with per-project configuration and human review gates",
+      "version": "0.1.0",
+      "source": "./"
+    }
+  ]
+}

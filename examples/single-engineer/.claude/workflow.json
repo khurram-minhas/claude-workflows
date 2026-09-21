@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../config/workflow.schema.json",
+  "$comment": "Minimum useful configuration for one engineer on one repository. No transitions, no story points, no reviewer pool. Add keys as the project grows.",
+  "project": {
+    "name": "My Service",
+    "stackSummary": "Node 20, Express, Prisma + PostgreSQL, Vitest",
+    "codingStandards": ".claude/coding-standards.md"
+  },
+  "tracker": {
+    "type": "jira",
+    "cloudId": "yourorg.atlassian.net",
+    "projectKey": "MYS",
+    "browseUrl": "https://yourorg.atlassian.net/browse/"
+  },
+  "git": { "baseBranch": "main" },
+  "github": { "confirmBeforeCreate": true },
+  "commands": {
+    "lint": "npm run lint",
+    "test": "npm test",
+    "testSingleFile": "npx vitest run <file>"
+  },
+  "testing": { "policy": "tests-with-features" },
+  "plans": { "requiredFor": "non-trivial" },
+  "aiContribution": { "enabled": true }
+}

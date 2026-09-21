@@ -1,4 +1,4 @@
-# Arbisoft Claude Workflows
+# Khurram / Xiangqi Claude Workflows
 
 Shared Claude Code commands, skills and agents for the ticket-to-PR engineering lifecycle,
 extracted from the Xiangqi team's setup and made project-independent. Install it as a plugin,

@@ -8,7 +8,7 @@ which commands use it, what it needs, and what happens without it.
 
 | Integration | Transport | Used by | Mandatory? | Without it |
 | --- | --- | --- | --- | --- |
-| **Jira** (Atlassian MCP) | Remote MCP (`mcp.atlassian.com`) or claude.ai connector | pick-ticket, start-ticket, analyze-ticket, create-pr, release-notes, setup-workflow | Required for `/pick-ticket`; optional elsewhere | Paste fallback; tracker writes listed as "to do by hand" |
+| **Jira** (Atlassian MCP) | Remote MCP (`mcp.atlassian.com`) or claude.ai connector | pick-ticket, parallel-tickets, start-ticket, analyze-ticket, create-pr, release-notes, setup-workflow | Required for `/pick-ticket`; optional elsewhere | Paste fallback; tracker writes listed as "to do by hand" |
 | **Confluence** (same Atlassian MCP) | as above | create-pr (docs sync) | Optional (`docsSync.type`) | Skipped |
 | **GitHub** | `gh` CLI (no MCP) | create-pr, pr-comments, release-notes, setup-workflow | Required for those commands | Command stops at the GitHub step and says so |
 | **Figma** | Remote MCP (`mcp.figma.com`) or claude.ai connector | analyze-ticket (and plan via analyze) | Optional (`figma.enabled`) | Ask for screenshots; never describe an unseen design |

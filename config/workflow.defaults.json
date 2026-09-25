@@ -122,5 +122,10 @@
   },
   "figma": {
     "enabled": false
+  },
+  "parallel": {
+    "worktreeDir": "../<repo>-worktrees",
+    "launcher": "print",
+    "maxTickets": 5
   }
 }

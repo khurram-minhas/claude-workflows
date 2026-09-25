@@ -1,8 +1,8 @@
 {
   "name": "arbisoft-workflows",
   "displayName": "Arbisoft Claude Workflows",
-  "version": "0.1.0",
-  "description": "Ticket-to-PR engineering workflow for Claude Code: pick, start, analyze, plan, plan-review, implement, self-review, create-pr, pr-comments, ai-contribution, release-notes — configured per project, with human review gates.",
+  "version": "0.2.0",
+  "description": "Ticket-to-PR engineering workflow for Claude Code: pick, parallel-tickets, start, analyze, plan, plan-review, implement, self-review, create-pr, pr-comments, ai-contribution, release-notes — configured per project, with human review gates.",
   "author": {
     "name": "Arbisoft Engineering"
   },

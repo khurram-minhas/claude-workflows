@@ -47,6 +47,7 @@ This repository uses the shared **arbisoft-workflows** commands, configured in
 | Step | Command | Writes to tracker? |
 | --- | --- | --- |
 | Pick | `/pick-ticket` | no |
+| Several at once | `/parallel-tickets [KEY ...]` | no (each worktree session runs `/start-ticket`) |
 | Open | `/start-ticket <KEY>` | Planned SP (asked), → In Progress, cuts the branch |
 | Analyse / plan | `/analyze-ticket`, `/plan`, `/plan-review` | no |
 | Build | `/implement` | no |

@@ -19,7 +19,8 @@ merge, security-sensitive decisions, product decisions, final quality.
 
 | Gate | Command | What the human decides |
 | --- | --- | --- |
-| Which ticket | `/pick-ticket` | Never auto-picked |
+| Which ticket | `/pick-ticket`, `/parallel-tickets` | Never auto-picked |
+| Parallel worktrees | `/parallel-tickets` | Ticket list and worktree paths confirmed before any worktree is created; each session then passes every gate below on its own |
 | Story points | `/start-ticket` | Never invented; options shown against the real ticket text |
 | Plan approval | `/plan`, `/plan-review` | Approval recorded in the plan header before `/implement` |
 | Deviating from the plan | `/implement` | Any step outside the plan's scope is a question, not an action |

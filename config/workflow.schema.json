@@ -403,6 +403,30 @@
           "type": "boolean"
         }
       }
+    },
+    "parallel": {
+      "type": "object",
+      "description": "Used by /parallel-tickets.",
+      "properties": {
+        "worktreeDir": {
+          "type": "string",
+          "description": "Root directory for per-ticket worktrees; relative paths resolve from the repository root. <repo> is replaced by the repository's directory name. Default ../<repo>-worktrees."
+        },
+        "launcher": {
+          "enum": [
+            "print",
+            "vscode",
+            "tmux"
+          ],
+          "description": "How each ticket's Claude session is opened: print paste-ready commands, open a VS Code window (code -n), or a tmux window running claude."
+        },
+        "maxTickets": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 10,
+          "description": "Most worktrees one /parallel-tickets run may create."
+        }
+      }
     }
   }
 }

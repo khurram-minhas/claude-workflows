@@ -10,26 +10,12 @@ user just wants to start on something, point them to `/start-ticket <KEY>` or
 
 ## Steps
 
-1. **Active release (optional)** — if `tracker.pickFilter.onlyActiveRelease` is true, search
-   `project = <projectKey> AND fixVersion in unreleasedVersions("<projectKey>")` with
-   `fields: ["fixVersions"]`, collect unreleased versions, pick the earliest `releaseDate`. If
-   none, ask which release to use rather than guessing.
+1. **My queue** — run "My ready queue" from `jira-tracker` (active release, query, table).
+   Extract with `jq` as described there; never read the raw dump.
 
-2. **My queue** — JQL:
-   ```
-   project = <projectKey> AND assignee = currentUser() AND status = "<statuses.ready>"
-   [AND fixVersion = "<active release>"] [AND <pickFilter.extraJql>]
-   ORDER BY priority DESC, updated DESC
-   ```
-   `maxResults: 25`, `fields: ["summary", "status", "priority", "issuetype", "fixVersions"]`.
-   Extract with `jq` as described in `jira-tracker`; never read the raw dump.
+2. **Ask** which ticket to work on. Wait. Never pick for the user. If the user wants several
+   at once, point them to `/parallel-tickets`.
 
-3. **Present** a table — key, type, priority, summary, fix version — and state the filter that
-   was applied. If empty, say so and offer to broaden (other statuses, unassigned, other
-   release) on request.
-
-4. **Ask** which ticket to work on. Wait. Never pick for the user.
-
-5. **Hand off** to `/start-ticket <KEY>`.
+3. **Hand off** to `/start-ticket <KEY>`.
 
 This command reads the tracker only; it never writes to it and never writes code.

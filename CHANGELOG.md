@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 — 2026-09-25
+
+- New command `/parallel-tickets [KEY ...]`: one git worktree (detached at the base) and one
+  interactive Claude session per ticket, 2–5 at a time; each session runs `/start-ticket` with
+  every gate. Launchers: print (default), vscode, tmux.
+- New skill `parallel-worktrees`.
+- New config section `parallel` (`worktreeDir`, `launcher`, `maxTickets`).
+- The "my ready queue" query moved from `/pick-ticket` into `jira-tracker`, shared by both
+  commands.
+
 ## 0.1.0 — 2026-09-21
 
 Initial extraction from the Xiangqi client and server setups.

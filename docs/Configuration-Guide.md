@@ -38,6 +38,7 @@ Schema: [`config/workflow.schema.json`](../config/workflow.schema.json). Default
 | `failureLog` | path, area headings | analyze, implement, self-review, log-failure |
 | `docsSync` | none / confluence, map path, watched globs | create-pr |
 | `figma` | enabled | analyze |
+| `parallel` | worktree root, launcher (print / vscode / tmux), max tickets per run | parallel-tickets |
 
 ## Typical variations
 
@@ -50,6 +51,7 @@ Schema: [`config/workflow.schema.json`](../config/workflow.schema.json). Default
 | Dangerous test suite | `commands.test: null`, set `commands.testSingleFile`, describe the danger in `testing.notes` |
 | Several repos, one team | put tracker/github/weights in a team file; each repo `extends` it |
 | Personal reviewer preferences, local lint wrappers | `.claude/workflow.local.json` |
+| Open parallel ticket sessions in VS Code windows or tmux | `parallel.launcher` in `.claude/workflow.local.json` |
 
 ## What must never go in the shared repo
 

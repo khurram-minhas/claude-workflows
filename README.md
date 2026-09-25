@@ -10,6 +10,9 @@ your GitHub repo and your coding standards.
   ─▶ /implement ─▶ /self-review (/perf-check) ─▶ /create-pr ─▶ review ─▶ /pr-comments ─▶ merge
 ```
 
+Several tickets at once: `/parallel-tickets` gives each its own git worktree and its own
+Claude session, gates included.
+
 Every step that changes a ticket, opens a PR or resolves a thread stops for a human first.
 
 ## Install
@@ -48,8 +51,8 @@ the Figma MCP if you have designs. All optional except `gh` — see
 ## Layout
 
 ```
-commands/     14 lifecycle commands — sequence only, no rules, no project facts
-skills/       13 skills — the rules, each in exactly one place
+commands/     15 lifecycle commands — sequence only, no rules, no project facts
+skills/       14 skills — the rules, each in exactly one place
 agents/       plan-reviewer, code-reviewer — independent-context reviews
 config/       workflow.defaults.json + workflow.schema.json
 templates/    CLAUDE.md, coding standards (generic / React / Python), plan, PR, failure log, settings, mcp

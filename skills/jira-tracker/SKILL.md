@@ -32,6 +32,25 @@ jq -r '.issues.nodes[] | "\(.key)\t\(.fields.priority.name // "-")\t\(.fields.st
 
 Never read a raw Jira JSON dump into context.
 
+## My ready queue
+
+Used by `/pick-ticket` and `/parallel-tickets`.
+
+1. **Active release (optional)** — if `tracker.pickFilter.onlyActiveRelease` is true, search
+   `project = <projectKey> AND fixVersion in unreleasedVersions("<projectKey>")` with
+   `fields: ["fixVersions"]`, collect unreleased versions, pick the earliest `releaseDate`. If
+   none, ask which release to use rather than guessing.
+2. **Query** — `maxResults: 25`,
+   `fields: ["summary", "status", "priority", "issuetype", "fixVersions"]`:
+   ```
+   project = <projectKey> AND assignee = currentUser() AND status = "<statuses.ready>"
+   [AND fixVersion = "<active release>"] [AND <pickFilter.extraJql>]
+   ORDER BY priority DESC, updated DESC
+   ```
+3. **Present** a table — key, type, priority, summary, fix version — and state the filter
+   applied. If empty, say so and offer to broaden (other statuses, unassigned, other release)
+   on request.
+
 ## Presenting a ticket
 
 Before asking the user anything about a ticket, show:

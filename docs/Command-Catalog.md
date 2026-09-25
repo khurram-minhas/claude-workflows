@@ -1,6 +1,6 @@
 # Command Catalog
 
-Fourteen commands, one lifecycle. Each command has one responsibility and composes shared
+Fifteen commands, one lifecycle. Each command has one responsibility and composes shared
 skills instead of restating rules. Project facts come from `.claude/workflow.json`
 (see [Configuration-Guide.md](Configuration-Guide.md)).
 
@@ -10,6 +10,8 @@ skills instead of restating rules. Project facts come from `.claude/workflow.jso
 /pick-ticket ─▶ /start-ticket ─▶ /analyze-ticket ─▶ /plan ─▶ /plan-review ─▶ [human sign-off]
    ─▶ /implement ─▶ /self-review (+ /perf-check) ─▶ /create-pr ─▶ [human review] ─▶ /pr-comments
    ─▶ [human merge]            side commands: /ai-contribution · /log-failure · /release-notes
+
+/parallel-tickets ─▶ one worktree + one session per ticket, each running /start-ticket ─▶ …
 ```
 
 When installed as a plugin the commands may appear namespaced (`/arbisoft-workflows:plan`);
@@ -23,6 +25,7 @@ command refers to the bare name.
 | `/setup-workflow [solo\|team]` | Bootstrap a repo: detect stack, verify tracker ids, write config, scaffold templates | profile | `.claude/workflow.json`, plan template, failure log, standards, PR template, CLAUDE.md section | repo files | workflow-config, jira-tracker | Jira MCP (optional), `gh` | **New** — closes the "hand-copy 10 files" gap |
 | `/pick-ticket` | List my ready tickets, choose one | — | table → handoff | nothing | workflow-config, jira-tracker, human-in-the-loop | Jira MCP (required) | Xiangqi `/pick-ticket`, filter now config-driven |
 | `/start-ticket <KEY> [SP]` | Show ticket, settle SP with a human, → In Progress, cut branch | ticket | branch + report | tracker (SP, status), git | workflow-config, jira-tracker, git-standards, human-in-the-loop | Jira MCP (optional writes), git | Xiangqi `/start-ticket`, ids from config |
+| `/parallel-tickets [KEY ...]` | Work 2–5 tickets at once: one worktree (detached at base) + one interactive Claude session per ticket | keys or multi-pick from queue | worktrees, launched sessions, report | git worktrees only | workflow-config, jira-tracker, parallel-worktrees, human-in-the-loop | git, Jira MCP (optional), `code` / `tmux` (optional) | **New** — parallel work without giving up any gate |
 | `/analyze-ticket <KEY\|text>` | Grounded technical analysis, open questions, related work, risks, steps | ticket or pasted text | analysis | nothing | workflow-config, jira-tracker, figma-design, ai-failure-log, security-review, performance-review | Jira MCP (optional), Figma MCP (optional) | Xiangqi `/analyze-ticket`, generic layers + linked issues + failure-log lookup added |
 | `/plan <KEY> <desc>` | Create the plan file from the template; ask for sign-off | ticket | plan file | `plans.dir` | workflow-config, planning-standards, testing-standards, human-in-the-loop | — | Xiangqi `/plan` |
 | `/plan-review <KEY\|path>` | Independent challenge of a plan; proposed edits | plan | findings + edited plan | plan file (accepted edits only) | planning-standards, review-standards | `plan-reviewer` agent | **New** — sign-off was previously the author reading their own plan |
